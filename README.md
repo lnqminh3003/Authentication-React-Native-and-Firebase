@@ -17,6 +17,7 @@ Your task is putting `.env` file in `.gitignore`.
 - Sign In
 - Sign Up
 - UI Design
+- Store `token` in local storage using Expo SecureStore
 - `Refresh Token` API when `token` is expired
 - Navigation
 - Using Expo SecureStore to store `Token` and `Refresh Token`
