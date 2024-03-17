@@ -3,8 +3,12 @@ Authentication using React Native (Typescript, Expo, React Navigation, Redux for
 
 # First you clone this project
 Run `npm install`
+
 Run `npx expo start` to start the project in your Simulator
 
-# .env (Important)
-In this project, I commit .env file for you to replace the API_KEY easily in .env file. 
-Your task is putting .env file in .gitignore file
+# Important note (.env file)
+Get your `API_KEY` in Firebase project.
+
+In this project, I actually commit `.env` file for you to replace the `API_KEY` easily in `.env` file. 
+
+Your task is putting `.env` file in `.gitignore`.
