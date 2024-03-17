@@ -12,3 +12,10 @@ Get your `API_KEY` in Firebase project.
 In this project, I actually commit `.env` file for you to replace the `API_KEY` easily in `.env` file. 
 
 Your task is putting `.env` file in `.gitignore`.
+
+## Used Packages 
+- React navigation: https://reactnavigation.org
+- Redux for state management: https://redux-toolkit.js.org
+- Expo SecureStore: https://docs.expo.dev/versions/latest/sdk/securestore/
+- Http request: Axios
+- Expo SplashScreen
