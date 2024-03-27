@@ -65,7 +65,7 @@ function Navigation() {
   }
   useEffect(() => {
     getToken();
-  }, []);
+  }, [token]);
 
   if (isLoading) return null;
   return (
