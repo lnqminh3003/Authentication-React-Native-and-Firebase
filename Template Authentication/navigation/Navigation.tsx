@@ -64,7 +64,7 @@ function Navigation() {
     });
   }, [uid]);
 
-  if (isLoading) return <LoadingLayout />;
+  if (isLoading && uid == "") return <LoadingLayout />;
   return (
     <NavigationContainer>
       {uid == "" ? <AuthStack /> : <AuthenticatedStack />}
