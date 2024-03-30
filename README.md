@@ -1,6 +1,8 @@
 # Authentication-React-Native-and-Firebase
 Authentication using React Native (Typescript, Expo, React Navigation, Redux for state management) and Firebase REST API
 
+> If you use Firebase SDK -> check out Firebase-SDK branch
+
 # First you clone this project
 Run `npm install`
 
