@@ -3,7 +3,8 @@ import { API_KEY } from "@env";
 
 export async function signUp(email: string, password: string) {
   const api =
-    `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=` + API_KEY;
+    "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" +
+    "AIzaSyB_T7cZOltGKh7h6iD45MneFWdj0tq4_bo";
 
   const response = await axios({
     method: "post",
@@ -24,8 +25,8 @@ export async function signUp(email: string, password: string) {
 export async function logIn(email: string, password: string) {
   const api =
     "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=" +
-    API_KEY;
-
+    "AIzaSyB_T7cZOltGKh7h6iD45MneFWdj0tq4_bo";
+  console.log("a");
   const response = await axios({
     method: "post",
     url: api,
@@ -60,7 +61,7 @@ export async function refreshToken(refreshToken: string) {
 
 export async function testApi(token: string) {
   const api =
-    "https://thesis-c7e87-default-rtdb.firebaseio.com/message.json?auth=" +
+    "https://reactnativeudemy-cd56b-default-rtdb.firebaseio.com/message.json?auth=" +
     token;
   const response = await axios({
     method: "get",

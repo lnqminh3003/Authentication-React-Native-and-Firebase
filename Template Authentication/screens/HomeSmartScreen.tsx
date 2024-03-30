@@ -29,7 +29,7 @@ function HomeSmartScreen() {
   return (
     <View style={styles.homeScreenContainer}>
       <Text>HOME SCREEN</Text>
-      <Button title="Lot out" onPress={logOutUser} />
+      <Button title="Log out" onPress={logOutUser} />
     </View>
   );
 }
