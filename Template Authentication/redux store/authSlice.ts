@@ -1,18 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import * as SecureStore from "expo-secure-store";
-
-async function save(token: any, refreshToken: any) {
-  await SecureStore.setItemAsync("token", token);
-  await SecureStore.setItemAsync("refreshToken", refreshToken);
-}
 
 export interface AuthState {
+  uid: string
   token: string;
   refreshToken: string;
 }
 
 const initialState: AuthState = {
+  uid: "",
   token: "",
   refreshToken: "",
 };
@@ -22,18 +18,10 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     authenticate: (state, action: PayloadAction<any>) => {
-      state.token = action.payload.token;
-      state.refreshToken = action.payload.refreshToken;
-      console.log(state.token);
-      console.log(state.refreshToken);
-      save(state.token,state.refreshToken)
+      state.uid = action.payload.uid;
     },
     logOut: (state) => {
-      state.token = "";
-      state.refreshToken = "";
-      console.log(state.token);
-      console.log(state.refreshToken);
-      save("","")
+      state.uid = "";
     },
   },
 });

@@ -6,16 +6,12 @@ import ButtonConfirm from "../components/login+register/ButtonConfirm";
 import NavigateButton from "../components/login+register/NavigateButton";
 import LoadingLayout from "../components/login+register/LoadingLayout";
 import { signUp } from "../api/authentication/auth";
-import { useAppDispatch } from "../redux store/hook";
-import { authenticate } from "../redux store/authSlice";
 
 function RegisterScreen({ navigation }: any) {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [enteredConfirmPassword, setEnteredConfirmPassword] = useState("");
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-
-  const dispatch = useAppDispatch();
 
   function navigateToSignInScreen() {
     navigation.navigate("SignIn");
@@ -60,25 +56,19 @@ function RegisterScreen({ navigation }: any) {
     register(email, password);
   }
 
-  async function register(email: string, password: string) {
+  async function register(email:string, password: string) {
     setIsAuthenticating(true);
     try {
-      const response = await signUp(email, password);
-      dispatch(
-        authenticate({
-          token: response.token,
-          refreshToken: response.refreshToken,
-        })
-      );
-
+      await signUp(email, password);
+      setIsAuthenticating(false);
     } catch (err) {
+      setIsAuthenticating(false);
       Alert.alert("SIGN UP FAILED", "Please sign up again");
     }
-    setIsAuthenticating(false);
   }
 
-  if (isAuthenticating) {
-    return <LoadingLayout message={"SIGN UP..."} />;
+ if (isAuthenticating) {
+    return <LoadingLayout />;
   }
 
   return (

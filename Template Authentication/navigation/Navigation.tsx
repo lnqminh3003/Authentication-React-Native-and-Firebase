@@ -1,16 +1,17 @@
-import { View, Text, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
-import * as SplashScreen from 'expo-splash-screen';
 
 import LoginScreen from "../screens/LoginScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import HomeSmartScreen from "../screens/HomeSmartScreen";
+
 import { Colors } from "../constants/styles";
 import { useAppDispatch, useAppSelector } from "../redux store/hook";
-import { authenticate } from "../redux store/authSlice";
+import { authenticate, logOut } from "../redux store/authSlice";
+import LoadingLayout from "../components/login+register/LoadingLayout";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../api/firebase";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,38 +44,32 @@ function AuthenticatedStack() {
 }
 
 function Navigation() {
-  const token = useAppSelector((state) => state.auth.token);
+  const uid = useAppSelector((state) => state.auth.uid);
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(false);
 
-  async function getToken() {
-    setIsLoading(true);
-
-    let tokenResult = await SecureStore.getItemAsync("token");
-    let refreshTokenResult = await SecureStore.getItemAsync("refreshToken");
-    if (tokenResult != "" && refreshTokenResult != "") {
-      dispatch(
-        authenticate({ token: tokenResult, refreshToken: refreshTokenResult })
-      );
-    } else {
-      console.log("No value stored under that key");
-    }
-
-    setIsLoading(false);
-    await SplashScreen.hideAsync();
-  }
   useEffect(() => {
-    getToken();
-  }, [token]);
+    setIsLoading(true);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // await getDataFromDatabase();
 
-  if (isLoading) return null;
+        dispatch(authenticate({ uid: user.uid }));
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+        dispatch(logOut());
+        console.log("No user yet");
+      }
+    });
+  }, [uid]);
+
+  if (isLoading) return <LoadingLayout />;
   return (
     <NavigationContainer>
-      {token == "" ? <AuthStack /> : <AuthenticatedStack />}
+      {uid == "" ? <AuthStack /> : <AuthenticatedStack />}
     </NavigationContainer>
   );
 }
 
 export default Navigation;
-
-const styles = StyleSheet.create({});

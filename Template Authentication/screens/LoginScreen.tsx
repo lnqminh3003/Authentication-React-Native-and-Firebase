@@ -2,8 +2,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
-  Pressable,
   Alert,
 } from "react-native";
 import { useState } from "react";
@@ -12,16 +10,13 @@ import NavigateButton from "../components/login+register/NavigateButton";
 import FormInput from "../components/login+register/FormInput";
 import ButtonConfirm from "../components/login+register/ButtonConfirm";
 import LoadingLayout from "../components/login+register/LoadingLayout";
-import { logIn } from "../api/authentication/auth";
+import { signIn } from "../api/authentication/auth";
 import { useAppDispatch } from "../redux store/hook";
-import { authenticate } from "../redux store/authSlice";
 
 function LoginScreen({ navigation }: any) {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredPassword, setEnteredPassword] = useState("");
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-
-  const dispatch = useAppDispatch();
 
   function navigateToSignUpScreen() {
     navigation.navigate("SignUp");
@@ -54,27 +49,21 @@ function LoginScreen({ navigation }: any) {
       return;
     }
 
-    loginUser(email, password);
+    logInUser(email, password);
   }
 
-  async function loginUser(email: string, password: string) {
+  async function logInUser(email: string, password: string) {
     setIsAuthenticating(true);
     try {
-      const response = await logIn(email, password);
-      dispatch(
-        authenticate({
-          token: response.token,
-          refreshToken: response.refreshToken,
-        })
-      );
-    } catch (error) {
+      await signIn(email, password);
+    } catch (err) {
       Alert.alert("LOGIN FAILED", "Please login again");
     }
     setIsAuthenticating(false);
   }
 
   if (isAuthenticating) {
-    return <LoadingLayout message="SIGN IN ..." />;
+    return <LoadingLayout />;
   }
 
   return (
